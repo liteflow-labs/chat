@@ -1,5 +1,6 @@
 import type { Message } from '@xmtp/xmtp-js'
 import { useReducer } from 'react'
+import { sortDateAsc } from '../helpers'
 
 type MessageStoreEvent = {
   peerAddress: string
@@ -12,7 +13,12 @@ const useMessageStore = () => {
   const [messageStore, dispatchMessages] = useReducer(
     (state: MessageStore, { peerAddress, messages }: MessageStoreEvent) => ({
       ...state,
-      [peerAddress]: [...(state[peerAddress] || []), ...(messages || [])],
+      [peerAddress]: [...(state[peerAddress] || []), ...(messages || [])]
+        .filter(
+          (value, index, self) =>
+            self.findIndex((x) => value.id === x.id) === index
+        )
+        .sort(sortDateAsc),
     }),
     {}
   )
