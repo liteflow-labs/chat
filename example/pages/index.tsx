@@ -1,11 +1,10 @@
-import { ChatProvider } from '@nft/chat'
-import { fetchEns, fetchLiteflow } from '../fetcher'
+import { Chat, ChatProvider } from '@nft/chat'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 import type { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { Chat } from '@nft/chat'
 import { useCallback } from 'react'
-import { useSigner, useProvider } from 'wagmi'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { useProvider, useSigner } from 'wagmi'
+import { fetchEns, fetchLiteflow } from '../fetcher'
 
 const cache = new Map<string, Promise<{ name?: string; avatar?: string }>>()
 
