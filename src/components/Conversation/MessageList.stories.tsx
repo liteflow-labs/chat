@@ -1,8 +1,8 @@
 import { ComponentMeta } from '@storybook/react'
 import React, { createRef, MutableRefObject } from 'react'
-import MessagesList from './MessagesList'
 import useConversation from '../../hooks/useConversation'
 import { bob } from '../../tests/wallets'
+import MessagesList from './MessagesList'
 
 export default {
   component: MessagesList,

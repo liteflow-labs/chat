@@ -1,5 +1,5 @@
 import type { Conversation, Message, Stream } from '@xmtp/xmtp-js'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import useChat from './useChat'
 import useMessageStore from './useMessageStore'
 
@@ -22,7 +22,7 @@ const useConversation = (
       }
       setConversation(await client.conversations.newConversation(peerAddress))
     }
-    getConvo()
+    void getConvo()
   }, [client, peerAddress])
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const useConversation = (
       if (!stream) return
       await stream.return()
     }
-    closeStream()
+    void closeStream()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -44,7 +44,7 @@ const useConversation = (
         msgs.length !== messageStore[conversation.peerAddress]?.length
       ) {
         if (dispatchMessages) {
-          await dispatchMessages({
+          dispatchMessages({
             peerAddress: conversation.peerAddress,
             messages: msgs,
           })
@@ -70,9 +70,9 @@ const useConversation = (
         }
       }
     }
-    listMessages()
-    streamMessages()
-  }, [conversation, dispatchMessages, onMessageCallback])
+    void listMessages()
+    void streamMessages()
+  }, [conversation, dispatchMessages, onMessageCallback, messageStore])
 
   const handleSend = async (message: string) => {
     if (!conversation) return
