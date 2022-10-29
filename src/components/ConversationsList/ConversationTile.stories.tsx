@@ -1,9 +1,9 @@
 import { ComponentMeta } from '@storybook/react'
 import { Conversation } from '@xmtp/xmtp-js'
 import React from 'react'
-import ConversationTile from './ConversationTile'
-import { bob } from '../../tests/wallets'
 import useChat from '../../hooks/useChat'
+import { bob } from '../../tests/wallets'
+import ConversationTile from './ConversationTile'
 
 export default {
   component: ConversationTile,

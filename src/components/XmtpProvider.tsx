@@ -1,13 +1,18 @@
-import { getAddress } from '@ethersproject/address'
-import { Dict } from '@chakra-ui/utils'
 import { ChakraProvider } from '@chakra-ui/react'
-import React, { useCallback } from 'react'
-import storage from 'localforage'
-import { Reducer, useEffect, useReducer, useState } from 'react'
-import { Client } from '@xmtp/xmtp-js'
-import type { Conversation } from '@xmtp/xmtp-js'
-import { XmtpContext, XmtpContextType } from '../contexts/xmtp'
+import { Dict } from '@chakra-ui/utils'
 import { Signer } from '@ethersproject/abstract-signer'
+import { getAddress } from '@ethersproject/address'
+import type { Conversation } from '@xmtp/xmtp-js'
+import { Client } from '@xmtp/xmtp-js'
+import storage from 'localforage'
+import React, {
+  Reducer,
+  useCallback,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react'
+import { XmtpContext, XmtpContextType } from '../contexts/xmtp'
 
 type XmtpProviderProps = Pick<XmtpContextType, 'signer' | 'lookupAddress'> & {
   theme?: Dict

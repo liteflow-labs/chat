@@ -4,8 +4,8 @@ if (typeof localStorage === 'undefined' || localStorage === null) {
   global.localStorage = new StorageMock()
 }
 
-import { XmtpProvider } from './components/XmtpProvider'
 import Layout from './components/Layout'
+import { XmtpProvider } from './components/XmtpProvider'
 import _useChat from './hooks/useChat'
 
 export type { Account } from './contexts/xmtp'

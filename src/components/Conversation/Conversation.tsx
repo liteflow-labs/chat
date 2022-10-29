@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef } from 'react'
-import useConversation from '../../hooks/useConversation'
 import Loader from '../../components/Loader'
-import MessagesList from './MessagesList'
-import MessageComposer from './MessageComposer'
 import useChat from '../../hooks/useChat'
+import useConversation from '../../hooks/useConversation'
+import MessageComposer from './MessageComposer'
+import MessagesList from './MessagesList'
 
 const Conversation = (): JSX.Element => {
   const { recipient } = useChat()
