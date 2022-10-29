@@ -11,10 +11,14 @@ import React, { useEffect, useState } from 'react'
 import useChat from '../../hooks/useChat'
 
 type MessageComposerProps = {
+  disabled?: boolean
   onSend: (msg: string) => Promise<void>
 }
 
-const MessageComposer = ({ onSend }: MessageComposerProps): JSX.Element => {
+const MessageComposer = ({
+  onSend,
+  disabled,
+}: MessageComposerProps): JSX.Element => {
   const { recipient } = useChat()
   const [message, setMessage] = useState('')
 
@@ -25,9 +29,8 @@ const MessageComposer = ({ onSend }: MessageComposerProps): JSX.Element => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!message) {
-      return
-    }
+    if (disabled) return
+    if (!message) return
     await onSend(message)
     setMessage('')
   }
@@ -43,10 +46,16 @@ const MessageComposer = ({ onSend }: MessageComposerProps): JSX.Element => {
             value={message}
             onChange={onMessageChange}
             required
+            autoFocus
             autoComplete="off"
           />
           <InputRightElement>
-            <IconButton size="sm" type="submit" aria-label="Send">
+            <IconButton
+              size="sm"
+              type="submit"
+              aria-label="Send"
+              disabled={disabled}
+            >
               <PaperAirplaneIcon
                 style={{ transform: 'rotateZ(90deg) scale(0.6)' }}
               />
