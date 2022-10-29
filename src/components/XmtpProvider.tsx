@@ -1,40 +1,14 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import { Dict } from '@chakra-ui/utils'
-import { Signer } from '@ethersproject/abstract-signer'
 import { getAddress } from '@ethersproject/address'
-import type { Conversation } from '@xmtp/xmtp-js'
-import { Client } from '@xmtp/xmtp-js'
-import storage from 'localforage'
-import React, {
-  Reducer,
-  useCallback,
-  useEffect,
-  useReducer,
-  useState,
-} from 'react'
+import { Client, Message, Stream } from '@xmtp/xmtp-js'
+import React, { useCallback, useEffect, useState } from 'react'
 import { XmtpContext, XmtpContextType } from '../contexts/xmtp'
+import { createClient, listenToStream } from '../helpers'
+import useMessageStore from '../hooks/useMessageStore'
 
 type XmtpProviderProps = Pick<XmtpContextType, 'signer' | 'lookupAddress'> & {
   theme?: Dict
-}
-
-storage.config({
-  name: '@nft/chat',
-  storeName: 'xmtp-identities',
-  description: 'store identities for xmtp',
-})
-
-const createClient = async (signer: Signer) => {
-  const address = await signer.getAddress()
-  const storageKey = address.toLowerCase()
-  if (!(await storage.getItem(storageKey))) {
-    const keys = await Client.getKeys(signer)
-    await storage.setItem(storageKey, keys)
-  }
-  const keys = await storage.getItem<Uint8Array>(storageKey)
-  return keys
-    ? Client.create(null, { privateKeyOverride: keys })
-    : Client.create(signer)
 }
 
 export const XmtpProvider: React.FC<XmtpProviderProps> = ({
@@ -45,51 +19,47 @@ export const XmtpProvider: React.FC<XmtpProviderProps> = ({
 }) => {
   const [client, setClient] = useState<Client | null>()
   const [recipient, _setRecipient] = useState<string>()
-  const [loadingConversations, setLoadingConversations] =
-    useState<boolean>(true)
-
-  const [conversations, dispatchConversation] = useReducer<
-    Reducer<Map<string, Conversation>, Conversation | undefined>
-  >((state, conversation) => {
-    if (conversation === undefined) return new Map()
-    if (conversation.peerAddress === client?.address) return state
-    state.set(conversation.peerAddress, conversation)
-    return state
-  }, new Map())
+  const [stream, setStream] = useState<Stream<Message>>()
+  const { dispatchMessages, messageStore } = useMessageStore()
 
   const setRecipient = useCallback(
-    (address?: string) => {
-      const addr = address ? getAddress(address) : undefined
-      _setRecipient(addr)
-    },
+    (address?: string) =>
+      _setRecipient(address ? getAddress(address) : undefined),
     [_setRecipient]
   )
 
   useEffect(() => {
-    if (signer) {
-      createClient(signer)
-        .then(setClient)
-        .catch((e) => {
-          console.error(e)
-          setClient(null)
-        })
-    } else {
-      setClient(undefined)
-      dispatchConversation(undefined)
-    }
+    createClient(signer).then(setClient).catch(console.error)
     return () => setClient(undefined)
   }, [signer])
 
   useEffect(() => {
     if (!client) return
-
-    setLoadingConversations(true)
     client.conversations
-      .list()
-      .then((x) => x.forEach(dispatchConversation))
-      .finally(() => setLoadingConversations(false))
-    return () => dispatchConversation(undefined)
+      .streamAllMessages()
+      .then(setStream)
+      .catch(console.error)
+    return () => setStream(undefined)
   }, [client])
+
+  useEffect(() => {
+    if (!stream) return
+    listenToStream(stream, (message) => {
+      if (!client) throw new Error('client falsy')
+      const peerAddress =
+        client.address === message.recipientAddress
+          ? message.senderAddress
+          : message.recipientAddress
+      if (!peerAddress) throw new Error('peer address falsy')
+      dispatchMessages({
+        peerAddress,
+        messages: [message],
+      })
+    }).catch(console.error)
+    return () => {
+      stream && stream.return()
+    }
+  }, [stream, client, dispatchMessages])
 
   return (
     <ChakraProvider theme={theme}>
@@ -100,8 +70,8 @@ export const XmtpProvider: React.FC<XmtpProviderProps> = ({
           recipient,
           setRecipient,
           lookupAddress,
-          conversations,
-          loadingConversations,
+          addMessages: dispatchMessages,
+          store: messageStore,
         }}
       >
         {children}
