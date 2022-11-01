@@ -13,7 +13,7 @@ const useConversations = () => {
         const lastMessage = messages[messages.length - 1]
         return {
           peerAddress,
-          sent: lastMessage.sent,
+          sent: lastMessage?.sent,
         }
       }),
     [peers, store]
