@@ -1,8 +1,8 @@
 import { Divider, Flex, LinkBox, LinkOverlay, Text } from '@chakra-ui/react'
-import React, { useMemo } from 'react'
+import React from 'react'
 import Emoji from 'react-emoji-render'
 import { formatDate, truncate } from '../../helpers'
-import useChat from '../../hooks/useChat'
+import useMessages from '../../hooks/useMessages'
 import Address from '../Address'
 import Avatar from '../Avatar'
 
@@ -18,11 +18,8 @@ const ConversationTile = ({
   isSelected,
   onClick,
 }: ConversationTileProps): JSX.Element | null => {
-  const { store } = useChat()
-  const latestMessage = useMemo(() => {
-    const messages = store[peerAddress] || []
-    return messages[messages.length - 1]
-  }, [peerAddress, store])
+  const messages = useMessages()
+  const latestMessage = messages[messages.length - 1]
   return (
     <LinkBox key={peerAddress}>
       <Flex width="full" paddingX={3} paddingY={4}>
