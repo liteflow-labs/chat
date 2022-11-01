@@ -81,7 +81,7 @@ export const createClient = async (signer?: Signer) => {
     await storage.setItem(storageKey, keys)
   }
   const keys = await storage.getItem<Uint8Array>(storageKey)
-  return await (keys
+  return keys
     ? Client.create(null, { privateKeyOverride: keys })
-    : Client.create(signer))
+    : Client.create(signer)
 }
