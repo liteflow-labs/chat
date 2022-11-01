@@ -13,12 +13,16 @@ const useMessageStore = () => {
   const [messageStore, dispatchMessages] = useReducer(
     (state: MessageStore, { peerAddress, messages }: MessageStoreEvent) => ({
       ...state,
-      [peerAddress]: [...(state[peerAddress] || []), ...(messages || [])]
-        .filter(
-          (value, index, self) =>
-            self.findIndex((x) => value.id === x.id) === index
-        )
-        .sort(sortDateAsc),
+      [peerAddress]:
+        // Merge previous messages with new ones
+        [...(state[peerAddress] || []), ...(messages || [])]
+          // Filter with only unique messages
+          .filter(
+            (value, index, self) =>
+              self.findIndex((x) => value.id === x.id) === index
+          )
+          // Sort messages by date
+          .sort(sortDateAsc),
     }),
     {}
   )
