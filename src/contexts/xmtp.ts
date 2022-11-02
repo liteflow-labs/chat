@@ -1,11 +1,14 @@
 import { Signer } from '@ethersproject/abstract-signer'
-import type { Client, Conversation } from '@xmtp/xmtp-js'
-import { createContext } from 'react'
+import type { Client } from '@xmtp/xmtp-js'
+import { Message } from '@xmtp/xmtp-js'
+import { createContext, Dispatch } from 'react'
 
 export type Account = {
   name?: string
   avatar?: string
 }
+
+export type Store = { [key: string]: Message[] }
 
 export type XmtpContextType = {
   signer: Signer | undefined
@@ -16,8 +19,8 @@ export type XmtpContextType = {
 
   lookupAddress?: (address: string) => Promise<Account>
 
-  conversations: Map<string, Conversation> | null
-  loadingConversations: boolean
+  store: Store
+  addMessages: Dispatch<{ peerAddress: string; messages: Message[] }>
 }
 
 export const XmtpContext = createContext<XmtpContextType>({
@@ -27,8 +30,10 @@ export const XmtpContext = createContext<XmtpContextType>({
   setRecipient: () => {
     throw new Error('not implemented')
   },
-  conversations: null,
-  loadingConversations: false,
+  store: {},
+  addMessages: () => {
+    throw new Error('not implemented')
+  },
 })
 
 export default XmtpContext

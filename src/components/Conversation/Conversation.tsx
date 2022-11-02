@@ -1,7 +1,9 @@
+import { Progress } from '@chakra-ui/react'
 import React, { useCallback, useEffect, useRef } from 'react'
-import Loader from '../../components/Loader'
 import useChat from '../../hooks/useChat'
-import useConversation from '../../hooks/useConversation'
+import useFetchMessages from '../../hooks/useFetchMessages'
+import useMessages from '../../hooks/useMessages'
+import useSendMessage from '../../hooks/useSendMessage'
 import MessageComposer from './MessageComposer'
 import MessagesList from './MessagesList'
 
@@ -9,36 +11,24 @@ const Conversation = (): JSX.Element => {
   const { recipient } = useChat()
   const messagesEndRef = useRef(null)
 
-  const scrollToMessagesEndRef = useCallback(() => {
+  const scroll = useCallback(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(messagesEndRef.current as any)?.scrollIntoView({ behavior: 'smooth' })
   }, [])
 
-  const { messages, sendMessage, loading } = useConversation(
-    recipient,
-    scrollToMessagesEndRef
-  )
+  const messages = useMessages(recipient)
+  const { loading } = useFetchMessages(recipient, scroll)
+  const { send, loading: sending } = useSendMessage(recipient)
 
-  useEffect(() => {
-    if (messages.length === 0) return
-    scrollToMessagesEndRef()
-  }, [scrollToMessagesEndRef, recipient, messages])
+  useEffect(scroll, [scroll, recipient, messages])
 
   if (!recipient) return <div />
 
-  if (loading && !messages?.length) {
-    return (
-      <Loader
-        headingText="Loading messages..."
-        subHeadingText="Please wait a moment"
-      />
-    )
-  }
-
   return (
     <>
+      {loading && <Progress size="xs" isIndeterminate />}
       <MessagesList messagesEndRef={messagesEndRef} messages={messages} />
-      <MessageComposer onSend={sendMessage} />
+      <MessageComposer onSend={send} disabled={sending} />
     </>
   )
 }

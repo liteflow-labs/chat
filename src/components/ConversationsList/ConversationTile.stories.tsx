@@ -1,5 +1,4 @@
 import { ComponentMeta } from '@storybook/react'
-import { Conversation } from '@xmtp/xmtp-js'
 import React from 'react'
 import useChat from '../../hooks/useChat'
 import { bob } from '../../tests/wallets'
@@ -14,7 +13,7 @@ export const Default = () => {
   if (!client) return null
   return (
     <ConversationTile
-      conversation={new Conversation(client, bob.address)}
+      peerAddress={bob.address}
       isSelected={false}
       onClick={() => alert('clicked')}
     />
@@ -26,7 +25,7 @@ export const SelectedConversation = () => {
   if (!client) return null
   return (
     <ConversationTile
-      conversation={new Conversation(client, bob.address)}
+      peerAddress={bob.address}
       isSelected={true}
       onClick={() => alert('clicked')}
     />
