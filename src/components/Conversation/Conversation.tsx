@@ -20,7 +20,7 @@ const Conversation = (): JSX.Element => {
   const { loading } = useFetchMessages(recipient, scroll)
   const { send, loading: sending } = useSendMessage(recipient)
 
-  useEffect(() => scroll, [scroll, recipient, messages])
+  useEffect(scroll, [scroll, recipient, messages])
 
   if (!recipient) return <div />
 
