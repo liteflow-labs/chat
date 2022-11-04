@@ -18,7 +18,7 @@ const ConversationTile = ({
   isSelected,
   onClick,
 }: ConversationTileProps): JSX.Element | null => {
-  const messages = useMessages()
+  const messages = useMessages(peerAddress)
   const latestMessage = messages[messages.length - 1]
   return (
     <LinkBox key={peerAddress}>
