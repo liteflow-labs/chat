@@ -43,6 +43,11 @@ const Home: NextPage = () => {
     [provider]
   )
 
+  const redirect = useCallback(
+    (address) => window.open(`https://etherscan.io/address/${address}`),
+    []
+  )
+
   if (!signer.data)
     return (
       <div
@@ -58,7 +63,11 @@ const Home: NextPage = () => {
       </div>
     )
   return (
-    <ChatProvider signer={signer.data} lookupAddress={lookup}>
+    <ChatProvider
+      signer={signer.data}
+      lookupAddress={lookup}
+      onUserClick={redirect}
+    >
       <Chat recipient={recipient} />
     </ChatProvider>
   )

@@ -18,6 +18,7 @@ export type XmtpContextType = {
   setRecipient: (recipient: string | undefined) => void
 
   lookupAddress?: (address: string) => Promise<Account>
+  onUserClick?: (address: string) => void
 
   store: Store
   addMessages: Dispatch<{ peerAddress: string; messages: Message[] }>
