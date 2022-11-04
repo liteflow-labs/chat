@@ -7,7 +7,10 @@ import { XmtpContext, XmtpContextType } from '../contexts/xmtp'
 import { createClient, listenToStream } from '../helpers'
 import useMessageStore from '../hooks/useMessageStore'
 
-type XmtpProviderProps = Pick<XmtpContextType, 'signer' | 'lookupAddress'> & {
+type XmtpProviderProps = Pick<
+  XmtpContextType,
+  'signer' | 'lookupAddress' | 'onUserClick'
+> & {
   theme?: Dict
 }
 
@@ -15,6 +18,7 @@ export const XmtpProvider: React.FC<XmtpProviderProps> = ({
   children,
   signer,
   lookupAddress,
+  onUserClick,
   theme,
 }) => {
   const [client, setClient] = useState<Client | null>()
@@ -71,6 +75,7 @@ export const XmtpProvider: React.FC<XmtpProviderProps> = ({
           setRecipient,
           lookupAddress,
           addMessages: dispatchMessages,
+          onUserClick,
           store: messageStore,
         }}
       >

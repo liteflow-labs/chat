@@ -1,8 +1,9 @@
-import { Divider, Flex, Text } from '@chakra-ui/react'
+import { Divider, Flex, Link, Text } from '@chakra-ui/react'
 import type { Message } from '@xmtp/xmtp-js'
-import React, { Fragment, MutableRefObject } from 'react'
+import React, { Fragment, MutableRefObject, PropsWithChildren } from 'react'
 import Emoji from 'react-emoji-render'
 import { formatDate, formatTime, isOnSameDay } from '../../helpers'
+import useChat from '../../hooks/useChat'
 import Address from '../Address'
 import Avatar from '../Avatar'
 
@@ -15,12 +16,26 @@ type MessageTileProps = {
   message: Message
 }
 
+const UserLink = ({
+  children,
+  address,
+}: PropsWithChildren<{ address?: string }>) => {
+  const { onUserClick } = useChat()
+  if (!onUserClick) return <>{children}</>
+  if (!address) return <>{children}</>
+  return <Link onClick={() => onUserClick(address)}>{children}</Link>
+}
+
 const MessageTile = ({ message }: MessageTileProps): JSX.Element => (
   <Flex marginY="2">
-    <Avatar peerAddress={message.senderAddress as string} />
+    <UserLink address={message.senderAddress}>
+      <Avatar peerAddress={message.senderAddress as string} />
+    </UserLink>
     <Flex direction="column" marginLeft="2">
       <Flex alignItems="center">
-        <Address address={message.senderAddress as string} />
+        <UserLink address={message.senderAddress}>
+          <Address address={message.senderAddress as string} />
+        </UserLink>
         <Text marginX="2">{formatTime(message.sent)}</Text>
       </Flex>
       <Text>
