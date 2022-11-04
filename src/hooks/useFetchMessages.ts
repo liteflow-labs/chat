@@ -4,7 +4,7 @@ import useChat from './useChat'
 type OnMessageCallback = () => void
 
 const useFetchMessages = (
-  peerAddress?: string,
+  peerAddress: string | undefined,
   onMessageCallback?: OnMessageCallback
 ) => {
   const { client, addMessages } = useChat()

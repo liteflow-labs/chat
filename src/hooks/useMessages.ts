@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import useChat from './useChat'
 
-const useMessages = (peerAddress?: string) => {
+const useMessages = (peerAddress: string | undefined) => {
   const { store } = useChat()
 
   return useMemo(() => {

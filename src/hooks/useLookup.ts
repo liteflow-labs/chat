@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Account } from '../contexts/xmtp'
 import useChat from './useChat'
 
-const useLookup = (address?: string) => {
+const useLookup = (address: string | undefined) => {
   const { lookupAddress } = useChat()
   const [account, setAccount] = useState<Account>({})
   const [loading, setLoading] = useState<boolean>(false)
