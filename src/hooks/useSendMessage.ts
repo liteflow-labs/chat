@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import useChat from './useChat'
 
-const useSendMessage = (peerAddress?: string) => {
+const useSendMessage = (peerAddress: string | undefined) => {
   const { client } = useChat()
   const [loading, setLoading] = useState(false)
 
