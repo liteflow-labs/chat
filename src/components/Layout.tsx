@@ -62,7 +62,9 @@ const Navbar = ({
     <AddressInput {...addressInputProps}>{children}</AddressInput>
   ) : (
     <Flex justifyContent="space-between" padding="3" alignItems="center">
-      <Heading size="md">Messages</Heading>
+      <Heading size="md" fontWeight="600">
+        Messages
+      </Heading>
       <Spacer />
       <Button size="sm" onClick={onCreate}>
         + New

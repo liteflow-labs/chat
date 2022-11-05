@@ -24,14 +24,16 @@ const ConversationTile = ({
     <LinkBox key={peerAddress}>
       <Flex width="full" paddingX={3} paddingY={4}>
         <Avatar peerAddress={peerAddress} />
-        <Flex direction="column" width="full" marginLeft="2">
+        <Flex direction="column" width="full" marginLeft="2" gap={1}>
           <Flex justifyContent="space-between" alignItems="center" width="full">
             <LinkOverlay onClick={onClick} cursor="pointer">
               <Address address={peerAddress} />
             </LinkOverlay>
-            <Text>{latestMessage ? formatDate(latestMessage.sent) : '-'}</Text>
+            <Text fontSize="sm" fontWeight="500">
+              {latestMessage ? formatDate(latestMessage.sent) : '-'}
+            </Text>
           </Flex>
-          <Text>
+          <Text fontSize="sm" fontWeight="500">
             <Emoji
               text={
                 latestMessage

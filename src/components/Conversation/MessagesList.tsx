@@ -31,14 +31,16 @@ const MessageTile = ({ message }: MessageTileProps): JSX.Element => (
     <UserLink address={message.senderAddress}>
       <Avatar peerAddress={message.senderAddress as string} />
     </UserLink>
-    <Flex direction="column" marginLeft="2">
-      <Flex alignItems="center">
+    <Flex direction="column" width="full" marginLeft="2" gap={1}>
+      <Flex justifyContent="space-between" alignItems="center" width="full">
         <UserLink address={message.senderAddress}>
           <Address address={message.senderAddress as string} />
         </UserLink>
-        <Text marginX="2">{formatTime(message.sent)}</Text>
+        <Text marginX="2" fontSize="sm" fontWeight="500">
+          {formatTime(message.sent)}
+        </Text>
       </Flex>
-      <Text>
+      <Text fontSize="sm" fontWeight="500">
         {message.error ? (
           `Error: ${message.error?.message}`
         ) : (
@@ -52,7 +54,7 @@ const MessageTile = ({ message }: MessageTileProps): JSX.Element => (
 const DateDivider = ({ date }: { date?: Date }): JSX.Element => (
   <Flex alignItems="center" justifyContent="center" marginY="2">
     <Divider />
-    <Text width="full" align="center">
+    <Text width="full" align="center" fontSize="sm" fontWeight="500">
       {formatDate(date, { year: 'numeric', month: 'long', day: 'numeric' })}
     </Text>
     <Divider />
@@ -61,7 +63,9 @@ const DateDivider = ({ date }: { date?: Date }): JSX.Element => (
 
 const ConversationBeginningNotice = (): JSX.Element => (
   <Flex justifyContent="center" marginY="4">
-    <Text>This is the beginning of the conversation</Text>
+    <Text fontSize="sm" fontWeight="500">
+      This is the beginning of the conversation
+    </Text>
   </Flex>
 )
 
