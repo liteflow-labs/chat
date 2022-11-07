@@ -10,10 +10,12 @@ const NoConversationsMessage = (): JSX.Element => {
       textAlign="center"
       p={4}
     >
-      <Heading size="lg" marginY="4">
+      <Heading size="md" fontWeight="600" marginY="4">
         Your message list is empty
       </Heading>
-      <Heading size="sm">There are no messages for this address</Heading>
+      <Heading size="sm" fontWeight="500">
+        There are no messages for this address
+      </Heading>
     </Flex>
   )
 }

@@ -20,10 +20,14 @@ export const Loader = ({
     p={4}
   >
     <Spinner size="lg" />
-    <Heading size="lg" marginY="4">
+    <Heading size="md" fontWeight="600" marginY="4">
       {headingText}
     </Heading>
-    {subHeadingText && <Heading size="sm">{subHeadingText}</Heading>}
+    {subHeadingText && (
+      <Heading size="sm" fontWeight="500">
+        {subHeadingText}
+      </Heading>
+    )}
   </Flex>
 )
 

@@ -65,7 +65,12 @@ const RecipientControl = ({
             autoFocus
           />
         ) : (
-          <Text title={name || value} isTruncated>
+          <Text
+            title={name || value}
+            fontSize="sm"
+            fontWeight="500"
+            isTruncated
+          >
             {name || shortAddress(value)}
           </Text>
         )}

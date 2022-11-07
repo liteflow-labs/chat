@@ -43,7 +43,7 @@ const AddressInput = ({
   recipient,
   children,
 }: AddressInputProps) => (
-  <Flex alignItems="center" paddingX="3" paddingY="4" overflow="hidden">
+  <Flex alignItems="center" padding="3">
     <Link onClick={onCancel} marginRight="2">
       <ChevronLeftIcon width="20" />
     </Link>
@@ -62,7 +62,9 @@ const Navbar = ({
     <AddressInput {...addressInputProps}>{children}</AddressInput>
   ) : (
     <Flex justifyContent="space-between" padding="3" alignItems="center">
-      <Heading size="md">Messages</Heading>
+      <Heading size="md" fontWeight="600">
+        Messages
+      </Heading>
       <Spacer />
       <Button size="sm" onClick={onCreate}>
         + New
