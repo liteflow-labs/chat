@@ -10,7 +10,7 @@ type AddressProps = {
 const Address = ({ address }: AddressProps): JSX.Element => {
   const { data } = useLookup(address)
   return (
-    <Heading as="h4" size="sm" fontWeight="600">
+    <Heading as="h4" fontSize="sm" fontWeight="600">
       {data.name || shortAddress(address)}
     </Heading>
   )

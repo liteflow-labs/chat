@@ -9,13 +9,16 @@ const NoWalletConnectedMessage: React.FC = () => {
       alignItems="center"
       direction="column"
       textAlign="center"
+      marginTop="10"
       p={4}
     >
       <LinkIcon width="48" />
-      <Heading size="lg" marginY="4">
+      <Heading fontSize="md" fontWeight="600" marginY="4">
         No wallet connected
       </Heading>
-      <Heading size="sm">Please connect a wallet to begin</Heading>
+      <Heading fontSize="sm" fontWeight="500">
+        Please connect a wallet to begin
+      </Heading>
     </Flex>
   )
 }
