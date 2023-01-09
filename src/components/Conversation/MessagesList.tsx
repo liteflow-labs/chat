@@ -61,14 +61,6 @@ const DateDivider = ({ date }: { date?: Date }): JSX.Element => (
   </Flex>
 )
 
-const ConversationBeginningNotice = (): JSX.Element => (
-  <Flex justifyContent="center" marginY="4">
-    <Text fontSize="sm" fontWeight="500">
-      This is the beginning of the conversation
-    </Text>
-  </Flex>
-)
-
 const MessagesList = ({
   messages,
   messagesEndRef,
@@ -84,7 +76,6 @@ const MessagesList = ({
       grow={1}
       overflowY="auto"
     >
-      {messages && messages.length ? <ConversationBeginningNotice /> : null}
       {messages?.map((msg: Message) => {
         const dateHasChanged = !isOnSameDay(lastMessageDate, msg.sent)
         lastMessageDate = msg.sent
