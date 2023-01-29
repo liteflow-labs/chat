@@ -25,7 +25,7 @@ import { ChatProvider } from '@nft/chat'
 
 function App() {
   const signer = useSigner()
-  return <ChatProvider signer={signer}>// ... TODO</ChatProvider>
+  return <ChatProvider signer={signer}>{children}</ChatProvider>
 }
 ```
 
@@ -38,7 +38,7 @@ function App() {
 | `onUserClick`   | `(address: string) => void`                                        | **Optional**: Function called every time an address/avatar is clicked within the chat                                   |
 | `theme`         | `Dict` (@chakra-ui/utils)                                          | **Optional**: Theme to customize the look and feel of the chat https://chakra-ui.com/docs/styled-system/customize-theme |
 
-### Add the chat window anywhere you want
+### `Chat`
 
 Now that your application is set up with the provider, you can place the chat component anywhere.
 This component will have a dynamic size depending on the size of your container.
