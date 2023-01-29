@@ -1,13 +1,60 @@
-# Installation
+# Getting Started
 
-First, you will need to get an [NPM Auth Token](https://docs.npmjs.com/using-private-packages-in-a-ci-cd-workflow#set-the-token-as-an-environment-variable-on-the-cicd-server) provided by the Liteflow team to install this lib. See our documentation about the [token installation](https://docs.liteflow.com/docs/#installation).
+This library aims to provide a component to be integrated into any DApp to let users chat with each other.
+The chat is fully themeable, thanks to [ChakraUI](https://chakra-ui.com/).
+
+You can find examples of integrations in the following:
+
+- https://chat-liteflow.vercel.app/
+- https://demo.liteflow.com/
+
+### Installation
+
+Install @nft/chat
 
 ```bash
-npm install @nft/chat
+npm i @nft/chat
 ```
 
-# Learn More
+### `ChatProvider`
 
-If you want to learn more about Lifeflow's SDK make sure to visit our [documentation](https://liteflow.gitbook.io/docs/).
+Wrap your app with the `ChatProvider` component, passing your `ethers` signer to it.
 
-If you have any question or require support, feel free to [contact us](mailto:contact@liteflow.com).
+```tsx
+import { ChatProvider } from '@nft/chat'
+
+function App() {
+  const signer = useSigner()
+  return <ChatProvider signer={signer}>// ... TODO</ChatProvider>
+}
+```
+
+#### Props
+
+| name            | type                                                               | description                                                                                                             |
+| --------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
+| `signer`        | `Signer` (@ethersproject/abstract-signer)                          | An `ethers` signer representing the currently connected wallet                                                          |
+| `lookupAddress` | `(address: string) => Promise<{ name?: string, avatar?: string }>` | **Optional**: Function to resolve an Ethereum address (think about ENS, Lens protocol...)                               |
+| `onUserClick`   | `(address: string) => void`                                        | **Optional**: Function called every time an address/avatar is clicked within the chat                                   |
+| `theme`         | `Dict` (@chakra-ui/utils)                                          | **Optional**: Theme to customize the look and feel of the chat https://chakra-ui.com/docs/styled-system/customize-theme |
+
+### Add the chat window anywhere you want
+
+Now that your application is set up with the provider, you can place the chat component anywhere.
+This component will have a dynamic size depending on the size of your container.
+
+```tsx
+import { Chat } from '@nft/chat'
+
+function Page() {
+  return <Chat />
+}
+```
+
+#### Props
+
+| name        | type     | description                                       |
+| ----------- | -------- | ------------------------------------------------- |
+| `recipient` | `string` | **Optional**: Address of the recipient to chat to |
+
+You're good to go! Enjoy chatting in web3.
