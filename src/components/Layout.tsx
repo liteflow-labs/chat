@@ -45,7 +45,7 @@ const AddressInput = ({
 }: AddressInputProps) => (
   <Flex alignItems="center" padding="3">
     <Link onClick={onCancel} marginRight="2">
-      <ChevronLeftIcon width="20" />
+      <ChevronLeftIcon width="20" height="32" />
     </Link>
     <RecipientControl value={recipient} onSubmit={onSubmit} />
     {children}
