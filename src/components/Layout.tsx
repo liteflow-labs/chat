@@ -5,9 +5,9 @@ import {
   Heading,
   Link,
   Spacer,
-  useDimensions,
   useTheme,
 } from '@chakra-ui/react'
+import { useSize } from '@chakra-ui/react-use-size'
 import { ChevronLeftIcon } from '@heroicons/react/outline'
 import React, {
   createRef,
@@ -78,7 +78,7 @@ const Layout: FC<Props> = ({ recipient: originalRecipient, children }) => {
   const { client, signer, recipient, setRecipient } = useChat()
   const [createMode, setCreateMode] = useState<boolean>(false)
   const ref = createRef<HTMLDivElement>()
-  const dimensions = useDimensions(ref, true)
+  const dimensions = useSize(ref)
   const theme = useTheme()
 
   const reset = useCallback(() => {
@@ -104,8 +104,8 @@ const Layout: FC<Props> = ({ recipient: originalRecipient, children }) => {
   }, [setRecipient, originalRecipient])
 
   const menuWidth = 350
-  const width = (dimensions && dimensions.contentBox.width) || '100vw'
-  const height = (dimensions && dimensions.contentBox.height) || '100vh'
+  const width = (dimensions && dimensions.width) || '100vw'
+  const height = (dimensions && dimensions.height) || '100vh'
 
   const largeView = width >= menuWidth * 2.5 // Content should be at least 1.5x larger than menu (aka: 875px)
   const shouldDisplayNavbar = !recipient || largeView
