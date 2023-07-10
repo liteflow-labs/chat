@@ -2,19 +2,24 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { Dict } from '@chakra-ui/utils'
 import { getAddress } from '@ethersproject/address'
 import { Client, Message, Stream } from '@xmtp/xmtp-js'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, {
+  FC,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 import { XmtpContext, XmtpContextType } from '../contexts/xmtp'
 import { createClient, listenToStream } from '../helpers'
 import useMessageStore from '../hooks/useMessageStore'
 
-type XmtpProviderProps = Pick<
-  XmtpContextType,
-  'signer' | 'lookupAddress' | 'onUserClick'
-> & {
-  theme?: Dict
-}
+type XmtpProviderProps = PropsWithChildren<
+  Pick<XmtpContextType, 'signer' | 'lookupAddress' | 'onUserClick'> & {
+    theme?: Dict
+  }
+>
 
-export const XmtpProvider: React.FC<XmtpProviderProps> = ({
+export const XmtpProvider: FC<XmtpProviderProps> = ({
   children,
   signer,
   lookupAddress,

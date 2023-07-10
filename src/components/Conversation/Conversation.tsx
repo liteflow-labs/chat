@@ -1,5 +1,5 @@
 import { Progress } from '@chakra-ui/react'
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { JSX, useCallback, useEffect, useRef } from 'react'
 import useChat from '../../hooks/useChat'
 import useFetchMessages from '../../hooks/useFetchMessages'
 import useMessages from '../../hooks/useMessages'

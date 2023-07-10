@@ -1,5 +1,5 @@
 import { Progress } from '@chakra-ui/react'
-import React from 'react'
+import React, { JSX } from 'react'
 import useChat from '../../hooks/useChat'
 import useConversations from '../../hooks/useConversations'
 import useFetchConversations from '../../hooks/useFetchConversations'

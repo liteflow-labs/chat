@@ -1,5 +1,5 @@
 import { Heading } from '@chakra-ui/react'
-import React from 'react'
+import React, { JSX } from 'react'
 import { shortAddress } from '../helpers'
 import useLookup from '../hooks/useLookup'
 

@@ -6,17 +6,18 @@ import {
   Link,
   Spacer,
   useDimensions,
+  useTheme,
 } from '@chakra-ui/react'
 import { ChevronLeftIcon } from '@heroicons/react/outline'
 import React, {
   createRef,
+  FC,
   PropsWithChildren,
   useCallback,
   useEffect,
   useState,
 } from 'react'
 import useChat from '../hooks/useChat'
-import useThemeBackground from '../hooks/useThemeBackground'
 import { Conversation, RecipientControl } from './Conversation'
 import NavigationPanel from './NavigationPanel'
 
@@ -73,15 +74,12 @@ const Navbar = ({
     </Flex>
   )
 
-const Layout: React.FC<Props> = ({
-  recipient: originalRecipient,
-  children,
-}) => {
+const Layout: FC<Props> = ({ recipient: originalRecipient, children }) => {
   const { client, signer, recipient, setRecipient } = useChat()
   const [createMode, setCreateMode] = useState<boolean>(false)
-  const backgroundColor = useThemeBackground()
   const ref = createRef<HTMLDivElement>()
   const dimensions = useDimensions(ref, true)
+  const theme = useTheme()
 
   const reset = useCallback(() => {
     setRecipient(undefined)
@@ -117,7 +115,7 @@ const Layout: React.FC<Props> = ({
       ref={ref}
       width="full"
       height="full"
-      backgroundColor={backgroundColor}
+      backgroundColor={theme.styles.global.body.bg}
     >
       {shouldDisplayNavbar && (
         <Flex

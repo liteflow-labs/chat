@@ -1,5 +1,5 @@
 import { Flex, Heading } from '@chakra-ui/react'
-import React from 'react'
+import React, { JSX } from 'react'
 
 const NoConversationsMessage = (): JSX.Element => {
   return (

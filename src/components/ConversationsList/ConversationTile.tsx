@@ -1,5 +1,5 @@
 import { Divider, Flex, LinkBox, LinkOverlay, Text } from '@chakra-ui/react'
-import React from 'react'
+import React, { JSX } from 'react'
 import Emoji from 'react-emoji-render'
 import { formatDate, truncate } from '../../helpers'
 import useMessages from '../../hooks/useMessages'
