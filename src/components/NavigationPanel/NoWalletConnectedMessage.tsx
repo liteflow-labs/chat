@@ -1,8 +1,8 @@
 import { Flex, Heading } from '@chakra-ui/react'
 import { LinkIcon } from '@heroicons/react/outline'
-import React from 'react'
+import React, { FC } from 'react'
 
-const NoWalletConnectedMessage: React.FC = () => {
+const NoWalletConnectedMessage: FC = () => {
   return (
     <Flex
       justifyItems="center"

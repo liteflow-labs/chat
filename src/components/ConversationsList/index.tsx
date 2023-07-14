@@ -1,27 +1,25 @@
 import { Progress } from '@chakra-ui/react'
-import React from 'react'
+import { useConversations } from '@xmtp/react-sdk'
+import React, { JSX } from 'react'
 import useChat from '../../hooks/useChat'
-import useConversations from '../../hooks/useConversations'
-import useFetchConversations from '../../hooks/useFetchConversations'
 import ConversationTile from './ConversationTile'
 import NoConversationsMessage from './NoConversationsMessage'
 
 const ConversationsList = (): JSX.Element => {
   const { recipient, setRecipient } = useChat()
-  const { loading } = useFetchConversations()
-  const conversations = useConversations()
+  const { conversations, isLoading } = useConversations()
 
-  if (!loading && conversations.length == 0) return <NoConversationsMessage />
+  if (!isLoading && conversations.length == 0) return <NoConversationsMessage />
   return (
     <>
-      {loading && <Progress size="xs" isIndeterminate />}
+      {isLoading && <Progress size="xs" isIndeterminate />}
       <nav>
-        {conversations.map((peerAddress) => (
+        {conversations.map((conversation) => (
           <ConversationTile
-            key={peerAddress}
-            peerAddress={peerAddress}
-            isSelected={recipient == peerAddress}
-            onClick={() => setRecipient(peerAddress)}
+            key={conversation.peerAddress}
+            conversation={conversation}
+            isSelected={recipient == conversation.peerAddress}
+            onClick={() => setRecipient(conversation.peerAddress)}
           />
         ))}
       </nav>

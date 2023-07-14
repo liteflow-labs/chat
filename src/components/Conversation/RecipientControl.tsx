@@ -7,9 +7,9 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { getAddress } from '@ethersproject/address'
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCanMessage } from '@xmtp/react-sdk'
+import React, { JSX, useCallback, useEffect, useState } from 'react'
 import { shortAddress } from '../../helpers'
-import useChat from '../../hooks/useChat'
 import useLookup from '../../hooks/useLookup'
 
 type RecipientInputProps = {
@@ -21,11 +21,11 @@ const RecipientControl = ({
   value,
   onSubmit,
 }: RecipientInputProps): JSX.Element => {
-  const { client } = useChat()
   const {
     data: { name },
   } = useLookup(value)
   const [error, setError] = useState<Error>()
+  const { canMessage } = useCanMessage()
 
   useEffect(() => {
     if (value) setError(undefined)
@@ -40,14 +40,14 @@ const RecipientControl = ({
         return setError(new Error('Please enter a valid wallet address'))
 
       const address = getAddress(e.target.value)
-      const onNetwork = client ? await client.canMessage(address) : false
+      const onNetwork = await canMessage(address)
       if (!onNetwork)
         return setError(new Error('Recipient is not on the XMTP network'))
 
       onSubmit(address)
       e.target.blur()
     },
-    [onSubmit, client]
+    [onSubmit, canMessage]
   )
 
   return (

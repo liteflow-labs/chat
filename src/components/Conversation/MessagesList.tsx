@@ -1,6 +1,11 @@
 import { Divider, Flex, Link, Text } from '@chakra-ui/react'
-import type { Message } from '@xmtp/xmtp-js'
-import React, { Fragment, MutableRefObject, PropsWithChildren } from 'react'
+import type { DecodedMessage } from '@xmtp/xmtp-js'
+import React, {
+  Fragment,
+  JSX,
+  MutableRefObject,
+  PropsWithChildren,
+} from 'react'
 import Emoji from 'react-emoji-render'
 import { formatDate, formatTime, isOnSameDay } from '../../helpers'
 import useChat from '../../hooks/useChat'
@@ -8,12 +13,12 @@ import Address from '../Address'
 import Avatar from '../Avatar'
 
 export type MessageListProps = {
-  messages: Message[]
+  messages?: any[] // TODO: fix type
   messagesEndRef: MutableRefObject<null>
 }
 
 type MessageTileProps = {
-  message: Message
+  message: DecodedMessage
 }
 
 const UserLink = ({
@@ -76,7 +81,7 @@ const MessagesList = ({
       grow={1}
       overflowY="auto"
     >
-      {messages?.map((msg: Message) => {
+      {messages?.map((msg: DecodedMessage) => {
         const dateHasChanged = !isOnSameDay(lastMessageDate, msg.sent)
         lastMessageDate = msg.sent
         return (

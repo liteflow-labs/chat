@@ -1,6 +1,6 @@
 import { Flex, Heading, Spinner } from '@chakra-ui/react'
 
-import React from 'react'
+import React, { JSX } from 'react'
 
 type StyledLoaderProps = {
   headingText: string
