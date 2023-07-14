@@ -1,13 +1,12 @@
 import { Progress } from '@chakra-ui/react'
-import React, { JSX, useCallback, useEffect, useRef } from 'react'
+import { useMessages, useSendMessage } from '@xmtp/react-sdk'
+import { Conversation } from '@xmtp/xmtp-js'
+import React, { JSX, useCallback, useEffect, useRef, useState } from 'react'
 import useChat from '../../hooks/useChat'
-import useFetchMessages from '../../hooks/useFetchMessages'
-import useMessages from '../../hooks/useMessages'
-import useSendMessage from '../../hooks/useSendMessage'
 import MessageComposer from './MessageComposer'
 import MessagesList from './MessagesList'
 
-const Conversation = (): JSX.Element => {
+const Conversation = (conversation?: any /*TODO: fix type*/): JSX.Element => {
   const { recipient } = useChat()
   const messagesEndRef = useRef(null)
 
@@ -16,9 +15,21 @@ const Conversation = (): JSX.Element => {
     ;(messagesEndRef.current as any)?.scrollIntoView({ behavior: 'smooth' })
   }, [])
 
-  const messages = useMessages(recipient)
-  const { loading } = useFetchMessages(recipient, scroll)
-  const { send, loading: sending } = useSendMessage(recipient)
+  const { messages, isLoading } = useMessages(conversation)
+  const [sending, setSending] = useState<boolean>(false)
+  const _send = useSendMessage(conversation)
+
+  const send = useCallback(
+    async (message: string) => {
+      setSending(true)
+      try {
+        await _send(message)
+      } finally {
+        setSending(false)
+      }
+    },
+    [_send]
+  )
 
   useEffect(scroll, [scroll, recipient, messages])
 
@@ -26,7 +37,7 @@ const Conversation = (): JSX.Element => {
 
   return (
     <>
-      {loading && <Progress size="xs" isIndeterminate />}
+      {isLoading && <Progress size="xs" isIndeterminate />}
       <MessagesList messagesEndRef={messagesEndRef} messages={messages} />
       <MessageComposer onSend={send} disabled={sending} />
     </>

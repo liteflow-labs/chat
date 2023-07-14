@@ -1,5 +1,5 @@
 import { Signer } from '@ethersproject/abstract-signer'
-import { Client, Conversation, SortDirection, Stream } from '@xmtp/xmtp-js'
+import { Client, Conversation, SortDirection } from '@xmtp/xmtp-js'
 import { createInstance } from 'localforage'
 
 export const truncate = (
@@ -49,7 +49,7 @@ export const sortDateDesc = (
 }
 
 export const listenToStream = async <T>(
-  stream: Stream<T>,
+  stream: AsyncGenerator<T>,
   callback: (value: T) => void
 ) => {
   for await (const value of stream) {
@@ -66,8 +66,7 @@ export const getLatestMessage = async (conversation: Conversation) => {
   }
 }
 
-export const createClient = async (signer?: Signer) => {
-  if (!signer) return
+export const getKeys = async (signer: Signer) => {
   const storage = createInstance({
     name: '@nft/chat',
     storeName: 'xmtp-identities',
@@ -81,6 +80,12 @@ export const createClient = async (signer?: Signer) => {
     await storage.setItem(storageKey, keys)
   }
   const keys = await storage.getItem<Uint8Array>(storageKey)
+  return keys
+}
+
+export const createClient = async (signer?: Signer) => {
+  if (!signer) return
+  const keys = await getKeys(signer)
   return keys
     ? Client.create(null, { privateKeyOverride: keys })
     : Client.create(signer)

@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { useSize } from '@chakra-ui/react-use-size'
 import { ChevronLeftIcon } from '@heroicons/react/outline'
+import { useClient } from '@xmtp/react-sdk'
 import React, {
   createRef,
   FC,
@@ -75,7 +76,8 @@ const Navbar = ({
   )
 
 const Layout: FC<Props> = ({ recipient: originalRecipient, children }) => {
-  const { client, signer, recipient, setRecipient } = useChat()
+  const { client } = useClient({})
+  const { signer, recipient, setRecipient } = useChat()
   const [createMode, setCreateMode] = useState<boolean>(false)
   const ref = createRef<HTMLDivElement>()
   const dimensions = useSize(ref)

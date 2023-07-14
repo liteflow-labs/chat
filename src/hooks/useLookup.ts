@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Account } from '../contexts/xmtp'
+import { Account } from '../contexts/chat'
 import useChat from './useChat'
 
 const useLookup = (address: string | undefined) => {
