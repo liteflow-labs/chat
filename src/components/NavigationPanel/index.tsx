@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { JSX } from 'react'
 import useChat from '../../hooks/useChat'
 import ConversationsList from '../ConversationsList'
 import Loader from '../Loader'

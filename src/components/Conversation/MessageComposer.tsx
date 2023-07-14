@@ -7,7 +7,7 @@ import {
   InputRightElement,
 } from '@chakra-ui/react'
 import { PaperAirplaneIcon } from '@heroicons/react/outline'
-import React, { useEffect, useState } from 'react'
+import React, { JSX, useEffect, useState } from 'react'
 import useChat from '../../hooks/useChat'
 
 type MessageComposerProps = {

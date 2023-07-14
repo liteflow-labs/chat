@@ -7,7 +7,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { getAddress } from '@ethersproject/address'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { JSX, useCallback, useEffect, useState } from 'react'
 import { shortAddress } from '../../helpers'
 import useChat from '../../hooks/useChat'
 import useLookup from '../../hooks/useLookup'

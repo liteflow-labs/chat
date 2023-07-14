@@ -1,6 +1,11 @@
 import { Divider, Flex, Link, Text } from '@chakra-ui/react'
 import type { Message } from '@xmtp/xmtp-js'
-import React, { Fragment, MutableRefObject, PropsWithChildren } from 'react'
+import React, {
+  Fragment,
+  JSX,
+  MutableRefObject,
+  PropsWithChildren,
+} from 'react'
 import Emoji from 'react-emoji-render'
 import { formatDate, formatTime, isOnSameDay } from '../../helpers'
 import useChat from '../../hooks/useChat'
